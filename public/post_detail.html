@@ -9,13 +9,41 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-    <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-</head>
+
+    <script>
+      
+      window.onload = function () {
+          const noticeId = window.location.pathname.split('/')[2]
+          console.log(noticeId)
+          fetch('/notice/' + noticeId)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('subjects').innerText = data.subject;
+                document.getElementById('contents').innerText = data.content;
+                document.getElementById('usernames').innerText = data.username;
+              });
+
+          const userCookie = document.cookie.replace(/(?:(?:^|.*;\s*)USER_COOKIE_KEY\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+          const user = userCookie ? JSON.parse(userCookie) : null;
+
+          if (userCookie) {
+            document.getElementById('loggedInContent').style.display = 'block';
+            document.getElementById('notLoggedInContents').style.display = 'none';
+          } else { 
+            document.getElementById('loggedInContent').style.display = 'none';
+          }
+      };
+
+      function logout() {
+          document.cookie = "USER_COOKIE_KEY=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+          window.location.reload();
+      }
+    </script>
+  </head>
 <body>
-    <div id="notloggedInContent" style="display: none;">
+    <div id="notloggedInContents" style="display: block;">
         <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light static-top">
             <div class="container-fluid">
               <a class="navbar-brand" href="index.html">MyScheduling</a>
@@ -40,7 +68,7 @@
             </div>
           </nav>
         </div>
-        <div id="notloggedInContent" style="display: none;">
+        <div id="loggedInContent" style="display: block;">
             <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light static-top">
             <div class="container-fluid">
               <a class="navbar-brand" href="index.html">MyScheduling</a>
@@ -70,46 +98,20 @@
         </div>
         
 <div fragment="content" class="container my-3">
-    <h2 class="border-bottom py-2">게시물 제목</h2>
+    <h2 class="border-bottom py-2" id="subjects">게시물 제목</h2>
     <div fragment="content" class="card my-3">
         <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;">게시물 내용</div>
+            <div class="card-text" style="white-space: pre-line;" id="contents">게시물 내용</div>
             <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
-                    <div>게시물 날짜</div>
+                    <div id="usernames">이용자 이름</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-  // 쿠키에서 로그인 정보 가져오기
-  const userCookie = document.cookie.replace(/(?:(?:^|.*;\s*)USER_COOKIE_KEY\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-  const user = userCookie ? JSON.parse(userCookie) : null;
 
-  // 페이지 로드 시 쿠키를 기반으로 로그인 여부에 따라 HTML 요소를 보이거나 숨기기
-  window.onload = function () {
-      if (user) {
-          // 로그인한 경우
-          document.getElementById('loggedInContent').style.display = 'block';
-          document.getElementById('loggedInUsername').innerText = user.username;
-      } else {
-          // 로그인하지 않은 경우
-          document.getElementById('notLoggedInContent').style.display = 'block';
-      }
-  };
-
-  // 로그아웃 함수
-  function logout() {
-      // 쿠키 삭제 등 로그아웃에 필요한 동작 수행
-      // 여기에서는 쿠키를 간단히 삭제하는 예제
-      document.cookie = "USER_COOKIE_KEY=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      
-      // 페이지 새로고침
-      window.location.reload();
-  }
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/scripts.js"></script>
 </body>

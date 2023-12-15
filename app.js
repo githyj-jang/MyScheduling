@@ -5,6 +5,9 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
+
+
+
 const USER_COOKIE_KEY = 'USER';
 const USERS_JSON_FILENAME = 'users.json';
 const DATA_JSON_FILENAME = 'data.json';
@@ -16,7 +19,7 @@ async function fetchAllUsers() {
 }
 
 async function fetchUser(username) {
-    const users = await fetchAllUsers();
+    const users = await fetchAllUsers();    
     const user = users.find((user) => user.username === username);
     return user;
 }
@@ -49,6 +52,12 @@ async function createNotice(newNotice) {
     await fs.writeFile(NOTICE_JSON_FILENAME, JSON.stringify(notices));
 }
 
+async function fetchNotice(n) {
+    const NOTISs = await fetchAllnotice();    
+    const notis = NOTISs.find((notis) => notis.n === n);
+    return notis;
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
@@ -56,6 +65,12 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', async (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+app.get('/notice', async (req, res) => {
+    const notices = await fetchAllnotice();
+    res.json(notices);
+});
+
 
 app.post('/signup', async (req, res) => {
     const { username, name, password } = req.body;
@@ -114,6 +129,8 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+
+
 app.post('/dataup',async (req, res) => {
     const { mealtime,mealmoment, mealname, mealenergy, mealprotein, mealFiber, mealfolicacid, mealcalcium, mealsalt, mealiron, mealzinc } = req.body;
 
@@ -126,24 +143,30 @@ app.post('/dataup',async (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'result.html'));
 });
 
+
 app.post('/dataResult',async (req, res) => {
     const selectedDate = req.body.selectedDate;
     const meals = await fetchAllmeal();
     const user = JSON.parse(req.cookies[USER_COOKIE_KEY]);
-    const filteredMeals = meals.filter(meals => user.username === meals.username, meals.mealtime === selectedDate);
+    
+    const filteredMeals = meals.filter(meals => user.username === meals.username && meals.mealtime === selectedDate);
     res.json(filteredMeals);
 });
 
 app.post('/noticepost',async (req, res) => {
     const subject = req.body.subject;
     const content = req.body.content;
-
+    const user = JSON.parse(req.cookies[USER_COOKIE_KEY]);
+    const num = await fetchAllnotice();
+    n = num.length+1;
     await createNotice({
-        subject,content
+     username: user.username,subject,content,n
     });
 
     res.sendFile(path.join(__dirname, 'public', 'notice_board.html'));
 });
+
+
 
 app.listen(3000, () => {
     console.log('server is running at 3000');

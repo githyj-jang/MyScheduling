@@ -1,16 +1,49 @@
-<!doctype html>
+
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="" />
-    <meta name="author" content="" />
     <title>MyScheduling</title>
 
     <link href="css/styles.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+    <script>
+      
+    window.onload = function() {
+
+      
+      fetch('/notice')
+        .then(response => response.json())
+        .then(data => {
+          for (let i = 0; i < data.length; i++) {
+            document.getElementById('pos').innerHTML += `
+              <tr>
+                <td>${data[i].n}</td>
+                <td>${data[i].subject}</td>
+                <td>${data[i].content}</td>
+                <td>${data[i].username}</td>
+              </tr>
+            `;
+          }
+          
+        });
+
+        const userCookie = document.cookie.replace(/(?:(?:^|.*;\s*)USER\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+
+        if (userCookie) {
+          document.getElementById("LoggedInContent").style.display = 'block';
+          document.getElementById("LoggedInContent_2").style.display = 'block';
+          document.getElementById("notLoggedInContent").style.display = 'none';
+      } else {
+          document.getElementById("notLoggedInContent").style.display = 'block';
+          document.getElementById("LoggedInContent").style.display = 'none';
+          document.getElementById("LoggedInContent_2").style.display = 'none';
+      }
+    };
+
+  </script>
 </head>
 <body>
   <div id="notLoggedInContent" style="display: block;">
@@ -66,50 +99,24 @@
 	<table class="table">
     	<thead class="table-dark">
         	<tr>
-				<th>번호</th>
+				      <th>번호</th>
             	<th>제목</th>
-            	<th>작성일시</th>
+              <th>내용</th>
+              <th>작성자</th>
         	</tr>
     	</thead>
-    	<tbody>
-        	<tr>
-				<td >번호</td>
-            	<td>제목</td>
-            	<td>작성일시</td>
-        	</tr>
+    	<tbody id ="pos">
     	</tbody>
 	</table>
+  <hr/>
+
   <div id="LoggedInContent_2" style="display: none;">
 	<a class="btn btn-primary" href="post.html">게시물 등록하기</a>
 </div>
 </div>
-<script>
-  // 쿠키에서 로그인 정보 가져오기
-  
-  const userCookie = document.cookie.replace(/(?:(?:^|.*;\s*)USER\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-  
-  // const user = userCookie ? JSON.parse(userCookie) : null;
-
-  // 페이지 로드 시 쿠키를 기반으로 로그인 여부에 따라 HTML 요소를 보이거나 숨기기
-  window.onload = function () {
-      if (userCookie) {
-          // 로그인한 경우
-          document.getElementById("LoggedInContent").style.display = 'block';
-          document.getElementById("LoggedInContent_2").style.display = 'block';
-          document.getElementById("notLoggedInContent").style.display = 'none';
-          // 이름 가져오기     document.getElementById('loggedInUsername').innerText = user.username;
-      } else {
-          // 로그인하지 않은 경우
-          document.getElementById("notLoggedInContent").style.display = 'block';
-          document.getElementById("LoggedInContent").style.display = 'none';
-          document.getElementById("LoggedInContent_2").style.display = 'none';
-      }
-  };
-
-</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/scripts.js"></script>
-
+        
 </body>
 
 </html>
