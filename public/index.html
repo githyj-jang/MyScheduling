@@ -14,22 +14,67 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        
     </head>
     <body>
+        
         <!-- Navigation-->
-        <nav class="navbar navbar-light bg-light static-top">
-            <div class="container">
-                <a class="navbar-brand" href="../index.html">MyScheduling</a>
-                
+        <div id="notLoggedInContent" style="display: block;">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light static-top">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="index.html">MyScheduling</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.html">로그인</a>
-                    </li>   
-                </ul>
-                <a class="btn btn-primary" href="sign_up.html">Sign Up</a>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                 
+                </li>
+                  <li class="my_page">
+                    <a class="nav-link" href="login.html">로그인</a>
+                  </li>
+                  <li class="my_page">
+                    <a class="nav-link" href="notice_board.html">게시판</a>
+                  </li>
+                </ul>
+                <a class="btn btn-primary" href="sign_up.html">회원가입</a>
+              </div>
             </div>
-        </nav>
+          </nav>
+        </div>
+        <div id="LoggedInContent" style="display: none;">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light static-top">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="index.html">MyScheduling</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                
+                </li>
+                  <li class="my_page">
+                    <a class="nav-link" href="data.html">오늘의 기록</a>
+                  </li>
+                  <li class="my_page">
+                    <a class="nav-link" href="result.html">기록 확인</a>
+                  </li>
+                  <li class="my_page">
+                    <a class="nav-link" href="notice_board.html">게시판</a>
+                  </li>
+                </ul>
+                <a class="btn btn-primary" href="/logout">로그아웃</a>
+              </div>
+              <form></form>
+            </div>
+          </nav>
+        </div>
+        
+        
         <!-- Masthead-->
         <header class="masthead">
             <div class="container position-relative">
@@ -107,28 +152,43 @@
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                         <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="sitemap.html">사이트맵</a></li>
+                            <li class="list-inline-item">출처: 한국영양학회, 한국인 영양섭취기준위원회, 2010</li>
                         </ul>
                         <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2023. All Rights Reserved.</p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item">
-                                <a href="#!"><i class="bi-github fs-3"></i></a>
+                                <a href="https://github.com/githyj-jang/project_"><i class="bi-github fs-3"></i></a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </footer>
-        <!-- Bootstrap core JS-->
+        <script>
+            // 쿠키에서 로그인 정보 가져오기
+            
+            const userCookie = document.cookie.replace(/(?:(?:^|.*;\s*)USER\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            
+            // const user = userCookie ? JSON.parse(userCookie) : null;
+    
+            // 페이지 로드 시 쿠키를 기반으로 로그인 여부에 따라 HTML 요소를 보이거나 숨기기
+            window.onload = function () {
+                if (userCookie) {
+                    // 로그인한 경우
+                    document.getElementById("LoggedInContent").style.display = 'block';
+                    document.getElementById("notLoggedInContent").style.display = 'none';
+                    // 이름 가져오기     document.getElementById('loggedInUsername').innerText = user.username;
+                } else {
+                    // 로그인하지 않은 경우
+                    document.getElementById("notLoggedInContent").style.display = 'block';
+                    document.getElementById("LoggedInContent").style.display = 'none';
+                }
+            };
+
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>

@@ -15,51 +15,76 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<nav fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">MyScheduling</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light static-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">MyScheduling</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">로그인</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="sign_up.html">회원가입</a>
-                </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+            
+            </li>
+              <li class="my_page">
+                <a class="nav-link" href="notice_board.html">게시판</a>
+              </li>
+              <li class="my_page">
+                <a class="nav-link" href="notice_board.html">로그인</a>
+              </li>
             </ul>
+          </div>
         </div>
-    </div>
-</nav>
+      </nav>
 <div fragment="content" class="container my-3">
     <div class="my-3 border-bottom">
         <div>
             <h4>회원가입</h4>
         </div>
     </div>
-    <form>
+    <form method="POST" action="/signup">
         <div></div>
         <div class="mb-3">
             <label for="username" class="form-label">사용자ID</label>
-            <input type="text"class="form-control">
+            <input type="text"class="form-control" name="username">
         </div>
         <div class="mb-3">
-            <label for="password1" class="form-label">비밀번호</label>
-            <input type="password"class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="password2" class="form-label">비밀번호 확인</label>
-            <input type="password"class="form-control">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password"class="form-control" name="password">
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
-            <input type="email" class="form-control">
+            <input type="email" class="form-control" name="email">
         </div>
         <button type="submit" class="btn btn-primary">회원가입</button>
     </form>
 </div>
+<script>
+  // 폼 제출 이벤트를 처리하는 함수
+  async function handleFormSubmit(event) {
+      event.preventDefault(); // 기본 폼 제출 동작을 막음
+
+      const form = event.target;
+      const formData = new FormData(form);
+
+      // 서버로 데이터를 전송
+      const response = await fetch('/signup', {
+          method: 'POST',
+          body: formData
+      });
+
+      // 서버에서 받은 JSON 데이터
+      const data = await response.json();
+
+      // 받은 데이터를 기반으로 alert 띄우기
+      if (data.error) {
+          alert(data.error);
+      } else {
+          alert("환영합니다!!");
+          window.location.href = '/'; // 루트 페이지로 이동
+      }
+  }
+</script>
 </body>
 </html>

@@ -15,26 +15,29 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light static-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">MyScheduling</a>
-            
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">로그인</a>
-                </li>
-            </ul>
-            <a class="btn btn-primary" href="sign_up.html">Sign Up</a>
-            
-        </div>
-    </nav>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light static-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">MyScheduling</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+        
+        </li>
+          <li class="my_page">
+            <a class="nav-link" href="notice_board.html">게시판</a>
+          </li>
+        </ul>
+        <a class="btn btn-primary" href="sign_up.html">회원가입</a>
+      </div>
+    </div>
+  </nav>
 <div layout:fragment="content" class="container my-3">
-    <form>
-        <div>
-            <div class="alert alert-danger">
-                사용자ID 또는 비밀번호를 확인해 주세요.
-            </div>
-        </div>
+    <form method="POST" action="/login">
+        
         <div class="mb-3">
             <label for="username" class="form-label">사용자ID</label>
             <input type="text" name="username" id="username" class="form-control">
@@ -44,7 +47,40 @@
             <input type="password" name="password" id="password" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">로그인</button>
+
+        
     </form>
+    
 </div>
+<script>
+  // 폼 제출 이벤트를 처리하는 함수
+  async function handleFormSubmit(event) {
+      event.preventDefault(); // 기본 폼 제출 동작을 막음
+
+      const form = event.target;
+      const formData = new FormData(form);
+
+      // 서버로 데이터를 전송
+      const response = await fetch('/login', {
+          method: 'POST',
+          body: formData
+      });
+
+      // 서버에서 받은 JSON 데이터
+      const data = await response.json();
+
+      // 받은 데이터를 기반으로 alert 띄우기
+      if (data.error) {
+          alert(data.error);
+      } else {
+          
+          window.location.href = '/'; // 루트 페이지로 이동
+      }
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+
 </body>
+
 </html>      

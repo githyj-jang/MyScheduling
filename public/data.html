@@ -7,26 +7,33 @@
     <meta name="author" content="" />
     <title>MyScheduling</title>
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" th:href="css/style.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-    <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light static-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">MyScheduling</a>
-            
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light static-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">MyScheduling</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">로그인</a>
-                </li>
-            </ul>
-            <a class="btn btn-primary" href="sign_up.html">Sign Up</a>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
             
+            </li>
+              <li class="my_page">
+                <a class="nav-link" href="notice_board.html">게시판</a>
+              </li>
+              <li class="my_page">
+                <a class="nav-link" href="result.html">기록 확인</a>
+              </li>
+            </ul>
+            <a class="btn btn-primary" href="/logout">로그아웃</a>
+          </div>
         </div>
     </nav>
 
@@ -34,57 +41,69 @@
 
 <div fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">식단 정보 등록</h5>
-    <form>
-		<label for="date">날짜를 선택하세요:
-  		<input type="date"
-         id="date"
-         max="2120-07-30"
-         min="2000-10-05"
-         value="2023-11-13">
-		</label>
+    <form method="POST" action="/dataup">
+      <div class="mb-3">
+        <label for="mealtime">날짜를 선택하세요 : </label>
+        <input type="date" name="mealtime" id="mealtime" max="2120-07-30" min="2000-10-05">
+      </div>
+
         <div class="mb-3">
-            <label for="subject" class="form-label">음식 이름</label>
-            <input type="text" name="subject" id="subject" class="form-control">
+           <label for="mealmoment" class="form-label">식사 시기(아침,점심,저녁 .. )</label>
+          <input type="text" name="mealmoment" id="mealmoment" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="mealname" class="form-label">음식 이름</label>
+            <input type="text" name="mealname" id="mealname" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="mealenergy" class="form-label">에너지(Kcal)</label>
+            <input type="number" name="mealenergy" id="mealenergy" class="form-control">
         </div>
 		<div class="mb-3">
-            <label for="subject" class="form-label">총지방량</label>
-            <input type="text" name="subject" id="subject" class="form-control">
+            <label for="mealprotein" class="form-label">단백질(g)</label>
+            <input type="number" name="mealprotein" id="mealprotein" class="form-control">
+        </div>
+    <div class="mb-3" >
+          <label for="mealFiber" class="form-label">식이섬유 (g)</label>
+          <input type="number" name="mealFiber" id="mealFiber" class="form-control">
+      </div>
+		<div class="mb-3" >
+            <label for="mealfolicacid" class="form-label">엽산 (㎍ DFE)</label>
+            <input type="number" name="mealfolicacid" id="mealfolicacid" class="form-control">
         </div>
 		<div class="mb-3">
-            <label for="subject" class="form-label">포화지방</label>
-            <input type="text" name="subject" id="subject" class="form-control">
+            <label for="mealcalcium" class="form-label">칼슘(mg)</label>
+            <input type="number" name="mealcalcium" id="mealcalcium" class="form-control">
         </div>
 		<div class="mb-3">
-            <label for="subject" class="form-label">불포화지방</label>
-            <input type="text" name="subject" id="subject" class="form-control">
+            <label for="mealsalt" class="form-label">나트륨(g)</label>
+            <input type="number" name="mealsalt" id="mealsalt" class="form-control">
         </div>
 		<div class="mb-3">
-            <label for="subject" class="form-label">탄수화물</label>
-            <input type="text" name="subject" id="subject" class="form-control">
+            <label for="mealiron" class="form-label">철분(mg)</label>
+            <input type="number" name="mealiron" id="mealiron" class="form-control">
         </div>
 		<div class="mb-3">
-            <label for="subject" class="form-label">식이섬유</label>
-            <input type="text" name="subject" id="subject" class="form-control">
-        </div>
-		<div class="mb-3">
-            <label for="subject" class="form-label">당류</label>
-            <input type="text" name="subject" id="subject" class="form-control">
-        </div>
-		<div class="mb-3">
-            <label for="subject" class="form-label">단백질</label>
-            <input type="text" name="subject" id="subject" class="form-control">
-        </div>
-		<div class="mb-3">
-            <label for="subject" class="form-label">나트륨</label>
-            <input type="text" name="subject" id="subject" class="form-control">
-        </div>
-		<div class="mb-3">
-            <label for="subject" class="form-label">콜레스테롤</label>
-            <input type="text" name="subject" id="subject" class="form-control">
+            <label for="mealzinc" class="form-label">아연(mg)</label>
+            <input type="number" name="mealzinc" id="mealzinc" class="form-control">
         </div>
         <input type="submit" value="저장하기" class="btn btn-primary my-2">
     </form>
 </div>
-<script src="./bootstrap.min.js"></script>
+<script> // 페이지를 시작했을때 입력에 오늘 기준으로 하도록 설정 하기 위한 js
+  document.addEventListener('DOMContentLoaded', function() {
+  var today = new Date();
+   var day = today.getDate();
+    var month = today.getMonth() + 1;
+    var year = today.getFullYear();
+
+  var formattedDate = year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+
+  document.getElementById('mealtime').value = formattedDate;
+  });
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/scripts.js"></script>\
+
 </body>
 </html>
