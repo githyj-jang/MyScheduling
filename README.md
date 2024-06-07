@@ -72,4 +72,4 @@ npm start
 
 ## 문의
 
-궁금한 점이나 제안 사항이 있으시면 [이슈](https://github.com/your-username/diet-management-app/issues)에 등록해 주세요.
+궁금한 점이나 제안 사항이 있으시면 [이슈](https://github.com/githyj-jang/MyScheduling/issues)에 등록해 주세요.
