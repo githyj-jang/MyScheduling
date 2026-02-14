@@ -1,20 +1,56 @@
 {
-  "name": "project_",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "nutrition-management-system",
+  "version": "2.0.0",
+  "description": "Professional Nutrition Management System for nutritionists, trainers, and healthcare professionals",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write \"src/**/*.js\"",
+    "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate:undo": "sequelize-cli db:migrate:undo",
+    "db:seed": "sequelize-cli db:seed:all",
+    "db:reset": "sequelize-cli db:migrate:undo:all && sequelize-cli db:migrate && sequelize-cli db:seed:all"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "nutrition",
+    "health",
+    "meal-planning",
+    "nutrition-analysis",
+    "healthcare",
+    "express",
+    "postgresql",
+    "jwt",
+    "rbac"
+  ],
+  "author": "Jang Yunho",
+  "license": "MIT",
   "dependencies": {
-    "async": "^3.2.5",
-    "body-parser": "^1.20.2",
-    "cookie-parser": "^1.4.6",
+    "bcrypt": "^6.0.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
     "express": "^4.18.2",
-    "fs": "^0.0.1-security",
-    "path": "^0.12.7"
+    "express-rate-limit": "^8.2.1",
+    "express-validator": "^7.3.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.10.1",
+    "pg": "^8.18.0",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.5",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.2.3",
+    "eslint": "^10.0.0",
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.8.1",
+    "supertest": "^7.2.2"
   }
 }
