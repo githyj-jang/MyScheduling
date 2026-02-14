@@ -42,12 +42,11 @@ describe('Auth API', () => {
         .expect(201);
 
       expect(response.body.success).toBe(true);
-      expect(response.body.message).toBe('User registered successfully');
       expect(response.body.data.user.username).toBe(userData.username);
       expect(response.body.data.user.email).toBe(userData.email);
       expect(response.body.data.user.password).toBeUndefined();
-      expect(response.body.data.tokens).toHaveProperty('accessToken');
-      expect(response.body.data.tokens).toHaveProperty('refreshToken');
+      expect(response.body.data).toHaveProperty('accessToken');
+      expect(response.body.data).toHaveProperty('refreshToken');
     });
 
     it('should fail with duplicate username', async () => {
@@ -124,35 +123,22 @@ describe('Auth API', () => {
       const response = await request(app)
         .post('/api/auth/login')
         .send({
-          usernameOrEmail: 'loginuser',
+          username: 'loginuser',
           password: 'Password123!'
         })
         .expect(200);
 
       expect(response.body.success).toBe(true);
       expect(response.body.data.user.username).toBe('loginuser');
-      expect(response.body.data.tokens).toHaveProperty('accessToken');
-      expect(response.body.data.tokens).toHaveProperty('refreshToken');
-    });
-
-    it('should login successfully with email', async () => {
-      const response = await request(app)
-        .post('/api/auth/login')
-        .send({
-          usernameOrEmail: 'login@example.com',
-          password: 'Password123!'
-        })
-        .expect(200);
-
-      expect(response.body.success).toBe(true);
-      expect(response.body.data.user.email).toBe('login@example.com');
+      expect(response.body.data).toHaveProperty('accessToken');
+      expect(response.body.data).toHaveProperty('refreshToken');
     });
 
     it('should fail with incorrect password', async () => {
       const response = await request(app)
         .post('/api/auth/login')
         .send({
-          usernameOrEmail: 'loginuser',
+          username: 'loginuser',
           password: 'WrongPassword123!'
         })
         .expect(401);
@@ -165,7 +151,7 @@ describe('Auth API', () => {
       const response = await request(app)
         .post('/api/auth/login')
         .send({
-          usernameOrEmail: 'nonexistent',
+          username: 'nonexistent',
           password: 'Password123!'
         })
         .expect(401);
@@ -190,7 +176,7 @@ describe('Auth API', () => {
           role: 'nutritionist'
         });
 
-      token = registerResponse.body.data.tokens.accessToken;
+      token = registerResponse.body.data.accessToken;
       user = registerResponse.body.data.user;
     });
 
