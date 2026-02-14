@@ -123,3 +123,6 @@ notice.json.backup
 
 # Test files
 test-results/
+
+# Docs
+docs/
